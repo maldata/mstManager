@@ -1,9 +1,14 @@
 import tkinter
-from utilities.events.event import Event
+from utilities.event import Event
 
 
 class TkView():
     def __init__(self):
+        self.addEpisodeEvent = Event()
+        self.addMediaSetEvent = Event()
+        self.addToCollectionEvent = Event()
+        self.eventTestEvent = Event()
+
         self.root = tkinter.Tk()
         self.root.geometry("600x400+200+200")
         self.root.title("MST Manager")
@@ -35,6 +40,8 @@ class TkView():
         b = tkinter.Button(f2, text="Add Media Set", command=self.clicked_add_media_set)
         b.pack(fill=tkinter.X)
         b = tkinter.Button(f2, text="Add to Collection", command=self.clicked_add_to_collection)
+        b.pack(fill=tkinter.X)
+        b = tkinter.Button(f2, text="Event Test", command=self.eventTestEvent.fire)
         b.pack(fill=tkinter.X)
 
     def clicked_add_episode(self):
@@ -123,5 +130,11 @@ class TkView():
 # Add to Collection (for selected episode in listbox, dropbox for media set, string entry for notes)
 
 if __name__ == '__main__':
+    def doAThing():
+        print("Doin' a thing!")
+
     app = TkView()
+
+    app.eventTestEvent.subscribe(doAThing)
+
     app.mainloop()
