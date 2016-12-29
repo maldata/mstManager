@@ -44,6 +44,10 @@ class TkView():
         b = tkinter.Button(f2, text="Event Test", command=self.eventTestEvent.fire)
         b.pack(fill=tkinter.X)
 
+    def init_ui(self):
+        # TODO: everything that's currently in the constructor should probably be here.
+        pass
+
     def clicked_add_episode(self):
         print("Add Episode clicked.")
 
@@ -129,12 +133,12 @@ class TkView():
 # Add Media Set (string entry for media set name)
 # Add to Collection (for selected episode in listbox, dropbox for media set, string entry for notes)
 
-if __name__ == '__main__':
-    def doAThing():
-        print("Doin' a thing!")
-
-    app = TkView()
-
-    app.eventTestEvent.subscribe(doAThing)
-
-    app.mainloop()
+#if __name__ == '__main__':
+#    def doAThing():
+#        print("Doin' a thing!")
+#
+#    app = TkView()
+#
+#    app.eventTestEvent.subscribe(doAThing)
+#
+#    app.mainloop()

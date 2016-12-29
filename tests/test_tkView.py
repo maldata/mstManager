@@ -1,4 +1,13 @@
-from .context import view
+from context import *
 
-app = view.tkView.TkView()
+import views
+import views.tkView
+
+def doAThing():
+    print("Doin' a thing!")
+
+app = views.tkView.TkView()
+
+app.eventTestEvent.subscribe(doAThing)
+
 app.mainloop()
