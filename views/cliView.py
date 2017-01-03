@@ -59,6 +59,7 @@ class CliView(baseView.BaseView):
         else:
             return (False, seasonCode, episodeCode)
 
+    # TODO: this is business logic that does not belong here
     def validate_episode_number(self, episodeNum):
         """
         :param episodeNum: A string representing the episode number. This is user input.
@@ -84,6 +85,7 @@ class CliView(baseView.BaseView):
             print("Not enough characters in the given episode number.")
             return False
 
+    # TODO: this is business logic that does not belong here
     def _is_integer(self, s):
         try:
             int(s)
@@ -91,6 +93,7 @@ class CliView(baseView.BaseView):
         except ValueError:
             return False
 
+    # TODO: this is business logic that does not belong here
     def _split_episode_number(self, episodeNum):
         seasonCode = episodeNum[:-2]
         episodeCode = episodeNum[-2:]
