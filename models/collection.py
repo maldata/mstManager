@@ -2,8 +2,8 @@ import models.modelBase
 import sqlalchemy
 
 
-class Video(models.modelBase.Base):
-    __tablename__='video_collection'
+class Media(models.modelBase.Base):
+    __tablename__='media_collection'
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
     episode_id = sqlalchemy.Column(sqlalchemy.Integer,
@@ -14,6 +14,6 @@ class Video(models.modelBase.Base):
                                      nullable=False)
 
     episodes = sqlalchemy.orm.relationship('Episode',
-                                           back_populates='videos')
+                                           back_populates='media')
     media_sets = sqlalchemy.orm.relationship('MediaSet',
-                                             back_populates='videos')
+                                             back_populates='media')

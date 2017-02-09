@@ -11,6 +11,6 @@ class MediaSet(models.modelBase.Base):
 
     episodes = sqlalchemy.orm.relationship('Episode',
                                            back_populates='media_sets')
-    videos = sqlalchemy.orm.relationship('Video',
+    media = sqlalchemy.orm.relationship('Media',
                                          back_populates='media_sets')
     

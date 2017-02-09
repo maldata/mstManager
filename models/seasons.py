@@ -15,8 +15,8 @@ class Season(models.modelBase.Base):
 
     # A season contains multiple episodes. Each record in the episodes table will have a foreign key
     # to a season, so here we'll have a collection of episodes in this season.
-    episodes = sqlalchemy.orm.relationship("Episode", order_by=models.episodes.Episode.id,
-                                           back_populates="season")
+    episodes = sqlalchemy.orm.relationship('Episode',
+                                           back_populates='season')
 
     def __repr__(self):
         return "<Season(seasonNum='%s')>" % self.seasonNumber

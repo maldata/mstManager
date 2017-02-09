@@ -17,10 +17,10 @@ class Episode(models.modelBase.Base):
     season_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('seasons.id'))
 
     season = sqlalchemy.orm.relationship('Season',
-                                         back_populates="episodes")
+                                         back_populates='episodes')
     media_sets = sqlalchemy.orm.relationship('MediaSet',
                                              back_populates='episodes')
-    videos = sqlalchemy.orm.relationship('Video',
+    media = sqlalchemy.orm.relationship('Media',
                                          back_populates='episodes')
     
     def __repr__(self):
