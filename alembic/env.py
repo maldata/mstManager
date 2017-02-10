@@ -19,12 +19,8 @@ import os
 import sys
 sys.path.append(os.getcwd())
 
-import models.modelBase
-import models.collection
-import models.episodes
-import models.seasons
-import models.mediaSets
-target_metadata = models.modelBase.Base.metadata
+import db.models
+target_metadata = db.models.SAModelBase.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
