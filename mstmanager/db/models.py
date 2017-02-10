@@ -15,7 +15,7 @@ class Season(SAModelBase):
     # Among our class variables are the descriptions of each column
     # of the table, as follows
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
-    number = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    number = sqlalchemy.Column(sqlalchemy.String(4), nullable=False)
 
     # A season contains multiple episodes. Each record in the episodes
     # table will have a foreign key to a season, so here we'll have a
@@ -32,7 +32,7 @@ class Episode(SAModelBase):
 
     # Columns
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
-    number = sqlalchemy.Column(sqlalchemy.Integer, unique=True)
+    number = sqlalchemy.Column(sqlalchemy.Integer, unique=True, nullable=False)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=False)
 
     # Foreign key columns
@@ -44,6 +44,7 @@ class Episode(SAModelBase):
     season = sqlalchemy.orm.relationship('Season',
                                          back_populates='episodes')
     media_sets = sqlalchemy.orm.relationship('MediaSet',
+                                             secondary='media_collection',
                                              back_populates='episodes')
     media = sqlalchemy.orm.relationship('Media',
                                          back_populates='episodes')
@@ -62,6 +63,7 @@ class MediaSet(SAModelBase):
 
     # Foreign key relationships
     episodes = sqlalchemy.orm.relationship('Episode',
+                                           secondary='media_collection',
                                            back_populates='media_sets')
     media = sqlalchemy.orm.relationship('Media',
                                          back_populates='media_sets')

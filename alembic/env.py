@@ -19,8 +19,8 @@ import os
 import sys
 sys.path.append(os.getcwd())
 
-import db.models
-target_metadata = db.models.SAModelBase.metadata
+import mstmanager.db.models
+target_metadata = mstmanager.db.models.SAModelBase.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
