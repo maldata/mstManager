@@ -106,3 +106,12 @@ class DbEngine:
 
         return m
 
+    def add_to_collection(self, episode, media_set):
+        m = models.Media()
+        m.episodes.append(episode)
+        m.media_sets.append(media_set)
+        self._session.add(m)
+        self._session.commit()
+
+        
+        
