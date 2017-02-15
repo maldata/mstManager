@@ -1,5 +1,6 @@
 import tkinter
-from views import baseView
+
+from mstmanager.views import baseView
 
 
 class TkView(baseView.BaseView):

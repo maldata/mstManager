@@ -1,5 +1,4 @@
-from views import baseView
-from views import cliMenu
+from mstmanager.views import baseView
 
 
 class CliView(baseView.BaseView):

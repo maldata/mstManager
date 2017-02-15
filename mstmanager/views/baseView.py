@@ -1,4 +1,4 @@
-from utilities.event import Event
+from mstmanager.utilities.event import Event
 
 
 class BaseView:
