@@ -1,11 +1,11 @@
 import unittest
 
-from context import *
-
+from . import context
 
 # app = views.cliView.CliView()
 # app.run_ui()
 #
+
 
 class CliTestSuite(unittest.TestCase):
     def setUp(self):

@@ -1,4 +1,4 @@
-from context import *
+from . import context
 
 import unittest
 import mstmanager.db.engine as db

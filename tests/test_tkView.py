@@ -1,4 +1,4 @@
-from context import *
+from . import context
 
 import mstmanager.views.tkView
 
