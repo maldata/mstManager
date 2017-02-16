@@ -1,7 +1,6 @@
 from context import *
 
-import views
-import views.tkView
+import mstmanager.views.tkView
 
 
 def collectionEv():
@@ -13,7 +12,7 @@ def mediaEv():
 def episodeEv():
     print("Add episode")
 
-app = views.tkView.TkView()
+app = mstmanager.views.tkView.TkView()
 
 app.addToCollectionEvent.subscribe(collectionEv)
 app.addMediaSetEvent.subscribe(mediaEv)
