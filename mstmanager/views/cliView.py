@@ -1,4 +1,9 @@
+import logging
+
 from mstmanager.views import baseView
+
+
+logger = logging.getLogger(__name__)
 
 
 class CliView(baseView.BaseView):
@@ -14,7 +19,7 @@ class CliView(baseView.BaseView):
                             ("Add to Collection", self.addToCollectionEvent)]
 
     def init_ui(self):
-        pass
+        logger.info('Initializing command-line interface.')
 
     def run_ui(self):
         keepGoing = True
@@ -43,26 +48,30 @@ class CliView(baseView.BaseView):
 
     def show_dialog_get_episode(self):
         """
-        :return: A tuple (ok, seasonCode, episodeCode). seasonCode is a string representing the
-        season code (from the user). episodeCode is the episode number string from the user.
-        ok is true if these comprise a valid episode number. ok is false if the user cancels
-        or enters an invalid episode number string.
+        :return: A tuple (ok, seasonCode, episodeCode). seasonCode is a
+        string representing the season code (from the user). episodeCode is
+        the episode number string from the user. ok is true if these comprise
+        a valid episode number. ok is false if the user cancels or enters an
+        invalid episode number string.
         """
         print("Enter the episode number. The last two characters must be digits.")
         print("There must be at least one alphanumeric character before those two digits.")
         print("These leading alphanumeric characters will be considered the season code.")
+        print("Hit enter without typing anything to cancel.")
         epNum = input(self.prompt)
-        (seasonCode, episodeCode) = self._split_episode_number(epNum)
 
-        if self.validate_episode_number(epNum):
-            return (True, seasonCode, episodeCode)
+        if epNum == '':
+            return (False, None, None)
         else:
-            return (False, seasonCode, episodeCode)
+            (seasonCode, episodeCode) = self._split_episode_number(epNum)
+
+            return (self.validate_episode_number(epNum), seasonCode, episodeCode)
 
     # TODO: this is business logic that does not belong here
     def validate_episode_number(self, episodeNum):
         """
-        :param episodeNum: A string representing the episode number. This is user input.
+        :param episodeNum: A string representing the episode number. This is
+        user input.
         :return: true if the episode number is valid, false otherwise.
         """
         if len(episodeNum) >= 3:
