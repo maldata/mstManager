@@ -1,6 +1,13 @@
 from mstmanager.utilities.event import Event
 
 
+class BaseDialog:
+    def __init__(self):
+        pass
+
+    
+
+
 class BaseView:
     def __init__(self):
         self.addEpisodeEvent = Event()

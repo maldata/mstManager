@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 
 from context import *
 
@@ -24,6 +25,7 @@ class CliTestSuite(unittest.TestCase):
         self.assertIsNone(result[1])
         self.assertIsNone(result[2])
 
+    @patch
     def test_enter_K07(self):
         print("Enter K07 and hit enter:\n")
         result = self.view.show_dialog_get_episode()

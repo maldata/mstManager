@@ -3,6 +3,7 @@ import tkinter
 from mstmanager.views import baseView
 
 
+
 class TkView(baseView.BaseView):
     def __init__(self):
         super().__init__()
