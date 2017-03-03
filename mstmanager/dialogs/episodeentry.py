@@ -13,6 +13,7 @@ class EpisodeEntryController:
         if not result.canceled:
             self.validate_episode_number(result.episode_number)
             self.validate_title(result.title)
+            return result
 
     def validate_episode_number(self, episode_number):
         """
@@ -41,7 +42,7 @@ class EpisodeEntryController:
             return False
 
     def validate_title(self, title):
-        pass
+        return len(title) > 0
 
     def _is_integer(self, s):
         try:
@@ -58,7 +59,7 @@ class EpisodeEntryController:
     
 class EpisodeEntryView:
     def __init__(self):
-        self.prompt = '>>> '
+        self.prompt = '--> '
 
     def show(self):
         print('Enter the episode number. Leave this blank to cancel.')
