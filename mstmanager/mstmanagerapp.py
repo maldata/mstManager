@@ -5,7 +5,8 @@ import logging.config
 import logging.handlers
 import traceback
 
-from . import views.cliView
+import mstmanager.controllers.main
+import mstmanager.db.engine
 
 
 def exception_hook(etype, value, tb):
@@ -18,7 +19,7 @@ def exception_hook(etype, value, tb):
         # shared.deinitialize()
         sys.exit(1)
     except Exception as e:
-        logging.exception("Exception occured during deinitialization, terminating process")
+        logging.exception("Exception occurred during deinitialization, terminating process")
         os._exit(os.EX_SOFTWARE)
 
 
@@ -38,9 +39,12 @@ def main():
     sys.excepthook = exception_hook
 
     # TODO: Parse the command line arguments to figure out if we're running a CLI or a Tk app
-    view = views.cliView.CliView()
-
-    view.init_ui()
+    db = mstmanager.db.engine.DbEngine()
+    db.initialize()
+    
+    main_controller = mstmanager.controllers.main.MainController(db)
+    main_controller.initialize()
+    main_controller.run()
 
     # parse the configuration file
     # config_dict = config.load_config(data_dir)
@@ -78,8 +82,9 @@ def main():
     #
     # app.exec_()
 
-    view.run_ui()
-
+    main_controller.deinitialize()
+    db.deinitialize()
+    
     sys.exit()
 
 

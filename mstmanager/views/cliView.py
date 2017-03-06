@@ -1,6 +1,7 @@
 import logging
 
 from mstmanager.views import baseView
+from mstmanager.utilities.event import Event
 
 
 logger = logging.getLogger(__name__)
@@ -9,11 +10,12 @@ logger = logging.getLogger(__name__)
 class CliView(baseView.BaseView):
     def __init__(self):
         super().__init__()
-        self.prompt = '>>> '
+        self.prompt = '--> '
         divLen = 20
         self.div1 = divLen * '='
         self.div2 = divLen * '-'
         self.div3 = divLen * '.'
+        
         self.mainOptions = [("Add an episode", self.addEpisodeEvent),
                             ("Add a media set", self.addMediaSetEvent),
                             ("Add to Collection", self.addToCollectionEvent)]
@@ -46,64 +48,9 @@ class CliView(baseView.BaseView):
 
         print("Quitting.")
 
-    def show_dialog_get_episode(self):
-        """
-        :return: A tuple (ok, seasonCode, episodeCode). seasonCode is a
-        string representing the season code (from the user). episodeCode is
-        the episode number string from the user. ok is true if these comprise
-        a valid episode number. ok is false if the user cancels or enters an
-        invalid episode number string.
-        """
-        print("Enter the episode number. The last two characters must be digits.")
-        print("There must be at least one alphanumeric character before those two digits.")
-        print("These leading alphanumeric characters will be considered the season code.")
-        print("Hit enter without typing anything to cancel.")
-        epNum = input(self.prompt)
-
-        if epNum == '':
-            return (False, None, None)
-        else:
-            (seasonCode, episodeCode) = self._split_episode_number(epNum)
-
-            return (self.validate_episode_number(epNum), seasonCode, episodeCode)
-
-    # TODO: this is business logic that does not belong here
-    def validate_episode_number(self, episodeNum):
-        """
-        :param episodeNum: A string representing the episode number. This is
-        user input.
-        :return: true if the episode number is valid, false otherwise.
-        """
-        if len(episodeNum) >= 3:
-            (seasonCode, episodeCode) = self._split_episode_number(episodeNum)
-
-            if self._is_integer(episodeCode):
-                if seasonCode.isalnum():
-                    return True
-                else:
-                    print("The characters '" + seasonCode + "' are not all alphanumeric.")
-                    return False
-            else:
-                print("The characters " + episodeCode + " are not numeric digits.")
-                return False
-
-            # TODO: check that the new episode number doesn't exist already... not here, though,
-            # this method should only validate the input
-
-        else:
-            print("Not enough characters in the given episode number.")
-            return False
-
-    # TODO: this is business logic that does not belong here
-    def _is_integer(self, s):
+    def _is_integer(self, value):
         try:
-            int(s)
+            int(value)
             return True
         except ValueError:
             return False
-
-    # TODO: this is business logic that does not belong here
-    def _split_episode_number(self, episodeNum):
-        seasonCode = episodeNum[:-2]
-        episodeCode = episodeNum[-2:]
-        return (seasonCode, episodeCode)
