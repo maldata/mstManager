@@ -2,6 +2,8 @@ import sqlalchemy
 import sqlalchemy.orm
 import sqlalchemy.ext.declarative
 
+from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
+
 
 SAModelBase = sqlalchemy.ext.declarative.declarative_base()
 
@@ -35,6 +37,18 @@ class Episode(SAModelBase):
     number = sqlalchemy.Column(sqlalchemy.Integer, unique=True, nullable=False)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=False)
 
+    @hybrid_property
+    def episode_code(self):
+        s = self.season.number
+        e = '{0:02d}'.format(self.number)
+        return s + e
+
+    @episode_code.expression
+    def episode_code(cls):
+        return sqlalchemy.sql.select([sqlalchemy.func.printf('%s', Season.number) +
+                                      sqlalchemy.func.printf('%02d', cls.number)]). \
+                              where(Season.id == cls.season_id).as_scalar()
+    
     # Foreign key columns
     season_id = sqlalchemy.Column(sqlalchemy.Integer,
                                   sqlalchemy.ForeignKey('seasons.id'),
@@ -50,8 +64,7 @@ class Episode(SAModelBase):
                                          back_populates='episodes')
     
     def __repr__(self):
-        return "<Episode(episodeNumber='%s')>" % \
-            (self.season.number + str(self.number))
+        return "<Episode(episodeNumber='%s')>".format(self.episode_code)
 
 
 class MediaSet(SAModelBase):

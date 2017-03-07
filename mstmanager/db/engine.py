@@ -113,5 +113,7 @@ class DbEngine:
         self._session.add(m)
         self._session.commit()
 
-        
+    def get_episode_list_by_season(self, season_code):
+        s = self.get_season(season_code)
+        return [(episode.episode_code, episode.name) for episode in s.episodes]
         

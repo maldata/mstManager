@@ -37,3 +37,8 @@ class MainController:
     
     def handle_add_to_collection_event(self):
         print('TODO: add to collection')
+
+    def handle_season_list_event(self, season):
+        episodes = self.db.get_episode_list_by_season(season)
+        self.view.set_episodes_for_selected_season(episodes)
+        
