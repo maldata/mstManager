@@ -16,9 +16,10 @@ class CliView(baseView.BaseView):
         self.div2 = divLen * '-'
         self.div3 = divLen * '.'
         
-        self.mainOptions = [("Add an episode", self.addEpisodeEvent),
-                            ("Add a media set", self.addMediaSetEvent),
-                            ("Add to Collection", self.addToCollectionEvent)]
+        self.mainOptions = [("Add an episode", self.addEpisodeEvent.fire),
+                            ("Add a media set", self.addMediaSetEvent.fire),
+                            ("Add to collection", self.addToCollectionEvent.fire),
+                            ("List a season", self.getSeasonToList)]
 
     def init_ui(self):
         logger.info('Initializing command-line interface.')
@@ -41,8 +42,10 @@ class CliView(baseView.BaseView):
             if self._is_integer(mainCmd):
                 index = int(mainCmd)
                 try:
-                    eventToFire = self.mainOptions[index][1]
-                    eventToFire.fire()
+#                    eventToFire = self.mainOptions[index][1]
+#                    eventToFire.fire()
+                    method_to_execute = self.mainOptions[index][1]
+                    method_to_execute()
                 except IndexError:
                     print("That's not a thing.")
 
@@ -54,3 +57,18 @@ class CliView(baseView.BaseView):
             return True
         except ValueError:
             return False
+
+    def getSeasonToList(self):
+        print("Enter the season code for which you'd like to see episodes. Leave this blank to cancel.")
+        season_code = input(self.prompt)
+        self.listSeasonEvent.fire(season_code)
+
+    def show_episodes_for_selected_season(self, episodes):
+        if episodes:
+            print('\n' + self.div2 + '\n')
+        
+            for episode in episodes:
+                print('{0}\t{1}'.format(episode.episode_code, episode.name))
+                
+            print('\n' + self.div2 + '\n')
+        

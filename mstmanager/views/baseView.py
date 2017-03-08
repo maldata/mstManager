@@ -3,9 +3,7 @@ from mstmanager.utilities.event import Event
 
 class BaseDialog:
     def __init__(self):
-        pass
-
-    
+        pass    
 
 
 class BaseView:
@@ -13,7 +11,9 @@ class BaseView:
         self.addEpisodeEvent = Event()
         self.addMediaSetEvent = Event()
         self.addToCollectionEvent = Event()
+        self.listSeasonEvent = Event()
         self.receivedEpisode = Event()
+        
 
     def init_ui(self):
         raise NotImplementedError
@@ -29,3 +29,7 @@ class BaseView:
 
     def show_dialog_add_to_collection(self):
         raise NotImplementedError
+
+    def show_episodes_for_selected_season(self, episodes):
+        raise NotImplementedError
+    

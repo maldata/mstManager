@@ -50,9 +50,9 @@ class DbEngine:
         return [s.number for s in ss]
 
     def get_season(self, number):
-        self._session.query(models.Season) \
-                     .filter(models.Season.number == number) \
-                     .one_or_none()
+        return self._session.query(models.Season) \
+                            .filter(models.Season.number == number) \
+                            .one_or_none()
         
     def parse_episode_number(self, number):
         """
@@ -115,5 +115,8 @@ class DbEngine:
 
     def get_episode_list_by_season(self, season_code):
         s = self.get_season(season_code)
-        return [(episode.episode_code, episode.name) for episode in s.episodes]
+        if s:
+            return s.episodes
+
+        #return [(episode.episode_code, episode.name) for episode in s.episodes]
         

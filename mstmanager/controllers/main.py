@@ -12,6 +12,7 @@ class MainController:
         self.view.addEpisodeEvent.subscribe(self.handle_add_episode_event)
         self.view.addMediaSetEvent.subscribe(self.handle_add_media_set_event)
         self.view.addToCollectionEvent.subscribe(self.handle_add_to_collection_event)
+        self.view.listSeasonEvent.subscribe(self.handle_list_season_event)
 
     def run(self):
         self.view.run_ui()
@@ -38,7 +39,7 @@ class MainController:
     def handle_add_to_collection_event(self):
         print('TODO: add to collection')
 
-    def handle_season_list_event(self, season):
-        episodes = self.db.get_episode_list_by_season(season)
-        self.view.set_episodes_for_selected_season(episodes)
+    def handle_list_season_event(self, season_code):
+        episodes = self.db.get_episode_list_by_season(season_code)
+        self.view.show_episodes_for_selected_season(episodes)
         
