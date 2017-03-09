@@ -13,6 +13,7 @@ class MainController:
         self.view.addMediaSetEvent.subscribe(self.handle_add_media_set_event)
         self.view.addToCollectionEvent.subscribe(self.handle_add_to_collection_event)
         self.view.listSeasonEvent.subscribe(self.handle_list_season_event)
+        self.view.requestMediaSetUpdate.subscribe(self.handle_media_set_update_event)
 
     def run(self):
         self.view.run_ui()
@@ -43,3 +44,5 @@ class MainController:
         episodes = self.db.get_episode_list_by_season(season_code)
         self.view.show_episodes_for_selected_season(episodes)
         
+    def handle_media_set_update_event(self):
+        self.view.all_media_sets = self.db.get_all_media_sets()

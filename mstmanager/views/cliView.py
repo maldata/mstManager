@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 class CliView(baseView.BaseView):
     def __init__(self):
         super().__init__()
+        self.all_media_sets = []
         self.prompt = '--> '
         divLen = 20
         self.div1 = divLen * '='
@@ -19,7 +20,8 @@ class CliView(baseView.BaseView):
         self.mainOptions = [("Add an episode", self.addEpisodeEvent.fire),
                             ("Add a media set", self.addMediaSetEvent.fire),
                             ("Add to collection", self.addToCollectionEvent.fire),
-                            ("List a season", self.getSeasonToList)]
+                            ("List a season", self.getSeasonToList),
+                            ("List media sets", self.getMediaSets)]
 
     def init_ui(self):
         logger.info('Initializing command-line interface.')
@@ -71,4 +73,16 @@ class CliView(baseView.BaseView):
                 print('{0}\t{1}'.format(episode.episode_code, episode.name))
                 
             print('\n' + self.div2 + '\n')
+
+    def getMediaSets(self):
+        self.requestMediaSetUpdate.fire()
+        self.show_media_sets()
+    
+    def show_media_sets(self):
+        print('\n' + self.div2 + '\n')
         
+        for media_set in enumerate(self.all_media_sets):
+            media_name = media_set[1].name
+            print('{0}: {1}'.format(media_set[0], media_name))
+
+        print('\n' + self.div2 + '\n')

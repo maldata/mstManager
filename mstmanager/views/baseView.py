@@ -13,7 +13,7 @@ class BaseView:
         self.addToCollectionEvent = Event()
         self.listSeasonEvent = Event()
         self.receivedEpisode = Event()
-        
+        self.requestMediaSetUpdate = Event()
 
     def init_ui(self):
         raise NotImplementedError

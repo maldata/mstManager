@@ -117,6 +117,7 @@ class DbEngine:
         s = self.get_season(season_code)
         if s:
             return s.episodes
-
-        #return [(episode.episode_code, episode.name) for episode in s.episodes]
         
+    def get_all_media_sets(self):
+        return self._session.query(models.MediaSet) \
+                            .order_by(models.MediaSet.id).all()

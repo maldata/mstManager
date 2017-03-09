@@ -34,7 +34,7 @@ class Episode(SAModelBase):
 
     # Columns
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
-    number = sqlalchemy.Column(sqlalchemy.Integer, unique=True, nullable=False)
+    number = sqlalchemy.Column(sqlalchemy.Integer, unique=False, nullable=False)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=False)
 
     @hybrid_property
