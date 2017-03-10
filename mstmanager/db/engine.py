@@ -66,7 +66,8 @@ class DbEngine:
             ep = number[-2:]
             episode_number = int(ep)
             return (season, episode_number)
-        except ValueError:
+        except (ValueError, TypeError) as e:
+            logger.Error('Failed to parse {0} as an episode number.'.format(number))
             return None
 
     def build_episode_number(self, season, episode_number):
@@ -121,3 +122,9 @@ class DbEngine:
     def get_all_media_sets(self):
         return self._session.query(models.MediaSet) \
                             .order_by(models.MediaSet.id).all()
+
+    def get_episode_by_code(self, code):
+        return self._session.query(models.Episode) \
+                            .filter(models.Episode.episode_code == code) \
+                            .one_or_none()
+        

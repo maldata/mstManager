@@ -38,7 +38,14 @@ class MainController:
             self.db.add_media_set(result.media_set_name)
     
     def handle_add_to_collection_event(self):
-        print('TODO: add to collection')
+        dlg = mstmanager.dialogs.addtocollection.AddToCollectionController()
+        result = dlg.get_addition_info()
+
+        if result is not None:
+            e = result[0]
+            m = result[1]
+            print('Adding episode {0} to the collection as part of media set {1}'.format(e.episode_code, m.name))
+            self.db.add_to_collection(e, m)
 
     def handle_list_season_event(self, season_code):
         episodes = self.db.get_episode_list_by_season(season_code)
