@@ -1,6 +1,7 @@
 import mstmanager.views.cliView
 import mstmanager.dialogs.episodeentry
 import mstmanager.dialogs.mediasetentry
+import mstmanager.dialogs.addtocollection
 
 class MainController:
     def __init__(self, db):
@@ -38,9 +39,9 @@ class MainController:
             self.db.add_media_set(result.media_set_name)
     
     def handle_add_to_collection_event(self):
-        dlg = mstmanager.dialogs.addtocollection.AddToCollectionController()
+        dlg = mstmanager.dialogs.addtocollection.AddToCollectionController(self.db)
         result = dlg.get_addition_info()
-
+        
         if result is not None:
             e = result[0]
             m = result[1]

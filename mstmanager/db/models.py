@@ -43,11 +43,15 @@ class Episode(SAModelBase):
         e = '{0:02d}'.format(self.number)
         return s + e
 
+    # This one's tricky... you need that first '' in the select... somehow that convinces
+    # sqlalchemy to render the +s as ||s (string concatenations).
     @episode_code.expression
     def episode_code(cls):
-        return sqlalchemy.sql.select([sqlalchemy.func.printf('%s', Season.number) +
-                                      sqlalchemy.func.printf('%02d', cls.number)]). \
-                              where(Season.id == cls.season_id).as_scalar()
+        return sqlalchemy.sql.select(['' +
+                                      sqlalchemy.func.printf('%s', Season.number) +
+                                      sqlalchemy.func.printf('%02d', cls.number)]) \
+                             .where(Season.id == cls.season_id) \
+                             .as_scalar()
     
     # Foreign key columns
     season_id = sqlalchemy.Column(sqlalchemy.Integer,
@@ -61,10 +65,10 @@ class Episode(SAModelBase):
                                              secondary='media_collection',
                                              back_populates='episodes')
     media = sqlalchemy.orm.relationship('Media',
-                                         back_populates='episodes')
+                                         back_populates='episode')
     
     def __repr__(self):
-        return "<Episode(episodeNumber='%s')>".format(self.episode_code)
+        return "<Episode(episodeNumber='{0}')>".format(self.episode_code)
 
 
 class MediaSet(SAModelBase):
@@ -79,7 +83,7 @@ class MediaSet(SAModelBase):
                                            secondary='media_collection',
                                            back_populates='media_sets')
     media = sqlalchemy.orm.relationship('Media',
-                                         back_populates='media_sets')
+                                         back_populates='media_set')
     
 class Media(SAModelBase):
     __tablename__='media_collection'
@@ -96,7 +100,7 @@ class Media(SAModelBase):
                                      nullable=False)
 
     # Foreign key relationships
-    episodes = sqlalchemy.orm.relationship('Episode',
-                                           back_populates='media')
-    media_sets = sqlalchemy.orm.relationship('MediaSet',
-                                             back_populates='media')
+    episode = sqlalchemy.orm.relationship('Episode',
+                                          back_populates='media')
+    media_set = sqlalchemy.orm.relationship('MediaSet',
+                                            back_populates='media')
