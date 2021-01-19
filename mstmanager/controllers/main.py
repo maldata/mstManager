@@ -9,12 +9,13 @@ class MainController:
         self.db = db
         
     def initialize(self):
-        self.view.init_ui()
-        self.view.addEpisodeEvent.subscribe(self.handle_add_episode_event)
-        self.view.addMediaSetEvent.subscribe(self.handle_add_media_set_event)
-        self.view.addToCollectionEvent.subscribe(self.handle_add_to_collection_event)
-        self.view.listSeasonEvent.subscribe(self.handle_list_season_event)
-        self.view.requestMediaSetUpdate.subscribe(self.handle_media_set_update_event)
+        pass
+#        self.view.init_ui()
+#        self.view.addEpisodeEvent.subscribe(self.handle_add_episode_event)
+#        self.view.addMediaSetEvent.subscribe(self.handle_add_media_set_event)
+#        self.view.addToCollectionEvent.subscribe(self.handle_add_to_collection_event)
+#        self.view.listSeasonEvent.subscribe(self.handle_list_season_event)
+#        self.view.requestMediaSetUpdate.subscribe(self.handle_media_set_update_event)
 
     def run(self):
         self.view.run_ui()
