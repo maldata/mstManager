@@ -19,7 +19,7 @@ def main():
     this_directory = os.path.dirname(os.path.abspath(__file__))
     qml_path = os.path.join(this_directory, 'mstmanager/qml/main.qml')
     qml_engine.load(qml_path)
-
+    
     main_window = qml_engine.rootObjects()[0]
     main_window.show()
 

@@ -1,22 +1,41 @@
+from PyQt5.QtCore import QObject, pyqtSlot, pyqtProperty, pyqtSignal
+
 import mstmanager.views.cliView
 import mstmanager.dialogs.episodeentry
 import mstmanager.dialogs.mediasetentry
 import mstmanager.dialogs.addtocollection
 
-class MainController:
-    def __init__(self, db):
-        self.view = mstmanager.views.cliView.CliView()
-        self.db = db
+class MainController(QObject):
+    active_screen_changed = pyqtSignal()
+    
+    def __init__(self, app):
+        super().__init__()
+
+        self._app = app
+
+        self._screen_map = {}
         
     def initialize(self):
+        # self.view.init_ui()
+        # self.view.addEpisodeEvent.subscribe(self.handle_add_episode_event)
+        # self.view.addMediaSetEvent.subscribe(self.handle_add_media_set_event)
+        # self.view.addToCollectionEvent.subscribe(self.handle_add_to_collection_event)
+        # self.view.listSeasonEvent.subscribe(self.handle_list_season_event)
+        # self.view.requestMediaSetUpdate.subscribe(self.handle_media_set_update_event)
         pass
-#        self.view.init_ui()
-#        self.view.addEpisodeEvent.subscribe(self.handle_add_episode_event)
-#        self.view.addMediaSetEvent.subscribe(self.handle_add_media_set_event)
-#        self.view.addToCollectionEvent.subscribe(self.handle_add_to_collection_event)
-#        self.view.listSeasonEvent.subscribe(self.handle_list_season_event)
-#        self.view.requestMediaSetUpdate.subscribe(self.handle_media_set_update_event)
 
+    @pyqtSlot()
+    def shutdown(self):
+        self._app.quit()
+
+    @pyqtProperty(str, notify=active_screen_changed)
+    def active_screen_key(self):
+        return self._active_screen_key
+        
+    @pyqtProperty(str, notify=active_screen_changed)
+    def active_screen_path(self):
+        return self._active_screen_path
+        
     def run(self):
         self.view.run_ui()
 
