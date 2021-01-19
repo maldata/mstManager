@@ -1,0 +1,11 @@
+# -*- mode: gitignore; -*-
+
+# emacs stuff
+*~
+\#*\#
+
+# python stuff
+__pycache__/
+*.py[cod]
+*$py.class
+
