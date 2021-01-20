@@ -17,10 +17,11 @@ ApplicationWindow {
     RowLayout {
 	id: mainLayout
 	anchors.fill: parent
-
+	
 	ColumnLayout {
 	    id: buttonColumn
 	    spacing: standardMargin
+	    Layout.margins: standardMargin
 
 	    Button {
 		text: "Thing A"

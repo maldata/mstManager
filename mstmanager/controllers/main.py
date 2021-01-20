@@ -1,5 +1,6 @@
 from PyQt5.QtCore import QObject, pyqtSlot, pyqtProperty, pyqtSignal
 
+from mstmanager.controllers.screens.screen_info import Screens, ScreenInfo
 import mstmanager.views.cliView
 import mstmanager.dialogs.episodeentry
 import mstmanager.dialogs.mediasetentry
@@ -14,6 +15,12 @@ class MainController(QObject):
         self._app = app
 
         self._screen_map = {}
+        screenA_info = ScreenInfo('screenA', '', )
+        screenB_info = ScreenInfo('screenB', '', )
+        self._screen_map[Screens.SCREEN_A] = screenA_info
+        self._screen_map[Screens.SCREEN_B] = screenB_info
+        
+        self._active_screen_key = Screens.SCREEN_A
         
     def initialize(self):
         # self.view.init_ui()
