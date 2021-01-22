@@ -24,12 +24,15 @@ ApplicationWindow {
 	    Layout.margins: standardMargin
 
 	    Button {
-		text: "Thing A"
+		id: screenA
+		text: "Screen A"
 		highlighted: true
 	    }
 
 	    Button {
-		text: "Thing B"
+		id: screenB
+		text: "Screen B"
+		highlighted: false
 	    }
 
 	    Item {
@@ -46,7 +49,7 @@ ApplicationWindow {
 	    Layout.fillHeight: true
 	    Layout.fillWidth: true
 
-	    source: main.active_screen_path
+	    source: main.active_screen_qml_path
 	} // screenLoader
 	
     } // mainLayout

@@ -1,6 +1,10 @@
 from PyQt5.QtCore import QObject, pyqtSlot, pyqtProperty, pyqtSignal
 
 from mstmanager.controllers.screens.screen_info import Screens, ScreenInfo
+from mstmanager.controllers.screens.base_screen import BaseScreenController
+from mstmanager.controllers.screens.screen_a import ScreenAController
+from mstmanager.controllers.screens.screen_b import ScreenBController
+
 import mstmanager.views.cliView
 import mstmanager.dialogs.episodeentry
 import mstmanager.dialogs.mediasetentry
@@ -15,14 +19,16 @@ class MainController(QObject):
         self._app = app
 
         self._screen_map = {}
-        screenA_info = ScreenInfo('screenA', '', )
-        screenB_info = ScreenInfo('screenB', '', )
-        self._screen_map[Screens.SCREEN_A] = screenA_info
-        self._screen_map[Screens.SCREEN_B] = screenB_info
+        self._screen_map[Screens.SCREEN_A] = ScreenInfo(Screens.SCREEN_A,
+                                                        './qml/screens/screen_a.qml',
+                                                        ScreenAController())
+        self._screen_map[Screens.SCREEN_B] = ScreenInfo(Screens.SCREEN_B,
+                                                        './qml/screens/screen_b.qml',
+                                                        ScreenBController())
         
         self._active_screen_key = Screens.SCREEN_A
         
-    def initialize(self):
+    def startup(self):
         # self.view.init_ui()
         # self.view.addEpisodeEvent.subscribe(self.handle_add_episode_event)
         # self.view.addMediaSetEvent.subscribe(self.handle_add_media_set_event)
@@ -38,11 +44,28 @@ class MainController(QObject):
     @pyqtProperty(str, notify=active_screen_changed)
     def active_screen_key(self):
         return self._active_screen_key
-        
+
     @pyqtProperty(str, notify=active_screen_changed)
-    def active_screen_path(self):
-        return self._active_screen_path
-        
+    def active_screen_id(self):
+        active_screen_info = self._screen_map[self.active_screen_key]
+        return active_screen_info.id
+    
+    @pyqtProperty(str, notify=active_screen_changed)
+    def active_screen_qml_path(self):
+        active_screen_info = self._screen_map[self.active_screen_key]
+        return active_screen_info.qml_path
+
+    @pyqtProperty(str, notify=active_screen_changed)
+    def active_screen_controller(self):
+        active_screen_info = self._screen_map[self.active_screen_key]
+        return active_screen_info.controller
+
+    def change_screen(self, next_screen):
+        self.active_screen_controller.deinitialize()
+        self.active_screen_key = next_screen
+        self.active_screen_controller.initialize()
+        self.active_screen_changed.emit()
+    
     def run(self):
         self.view.run_ui()
 
