@@ -6,7 +6,7 @@ class ScreenAController(BaseScreenController):
         super().__init__()
 
     def initialize(self):
-        pass
+        print("Initializing screen A controller")
 
     def deinitialize(self):
-        pass
+        print("De-initializing screen A controller")

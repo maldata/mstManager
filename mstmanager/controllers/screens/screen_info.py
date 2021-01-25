@@ -1,11 +1,6 @@
 from enum import Enum
 
 
-#class Screens(Enum):
-#    SCREEN_A = auto()
-#    SCREEN_B = auto()
-
-
 class ScreenInfo:
     def __init__(self, screen_id, qml_path, controller):
         self._id = screen_id
