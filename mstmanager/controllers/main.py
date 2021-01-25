@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QObject, pyqtSlot, pyqtProperty, pyqtSignal
 
-from mstmanager.controllers.screens.screen_info import Screens, ScreenInfo
+from mstmanager.controllers.screens.screen_info import ScreenInfo  ## , Screens
 from mstmanager.controllers.screens.base_screen import BaseScreenController
 from mstmanager.controllers.screens.screen_a import ScreenAController
 from mstmanager.controllers.screens.screen_b import ScreenBController
@@ -19,14 +19,14 @@ class MainController(QObject):
         self._app = app
 
         self._screen_map = {}
-        self._screen_map[Screens.SCREEN_A] = ScreenInfo(Screens.SCREEN_A,
-                                                        './qml/screens/screen_a.qml',
-                                                        ScreenAController())
-        self._screen_map[Screens.SCREEN_B] = ScreenInfo(Screens.SCREEN_B,
-                                                        './qml/screens/screen_b.qml',
-                                                        ScreenBController())
+        self._screen_map["screen_a_key"] = ScreenInfo("screen_a_key",
+                                                      './screens/screen_a.qml',
+                                                      ScreenAController())
+        self._screen_map["screen_b_key"] = ScreenInfo("screen_b_key",
+                                                      './screens/screen_b.qml',
+                                                      ScreenBController())
         
-        self._active_screen_key = Screens.SCREEN_A
+        self._active_screen_key = "screen_a_key"
         
     def startup(self):
         # self.view.init_ui()
@@ -45,6 +45,12 @@ class MainController(QObject):
     def active_screen_key(self):
         return self._active_screen_key
 
+    @active_screen_key.setter
+    def active_screen_key(self, value):
+        if self._active_screen_key != value:
+            self._active_screen_key = value
+            self.active_screen_changed.emit()
+
     @pyqtProperty(str, notify=active_screen_changed)
     def active_screen_id(self):
         active_screen_info = self._screen_map[self.active_screen_key]
@@ -60,9 +66,10 @@ class MainController(QObject):
         active_screen_info = self._screen_map[self.active_screen_key]
         return active_screen_info.controller
 
-    def change_screen(self, next_screen):
+    @pyqtSlot(str)
+    def change_screen(self, next_screen_key):
         self.active_screen_controller.deinitialize()
-        self.active_screen_key = next_screen
+        self.active_screen_key = next_screen_key
         self.active_screen_controller.initialize()
         self.active_screen_changed.emit()
     

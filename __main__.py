@@ -23,7 +23,7 @@ def main():
     main_window = qml_engine.rootObjects()[0]
     main_window.show()
 
-    QTimer.singleShot(0, main_controller.initialize)
+    QTimer.singleShot(0, main_controller.startup)
     sys.exit(app.exec_())
 
 

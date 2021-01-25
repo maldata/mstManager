@@ -8,3 +8,5 @@ class BaseScreenController:
     def deinitialize(self):
         pass
 
+    def change_screen(self, next_screen_key):
+        pass

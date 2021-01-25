@@ -26,13 +26,15 @@ ApplicationWindow {
 	    Button {
 		id: screenA
 		text: "Screen A"
-		highlighted: true
+		highlighted: main.active_screen_key == "screen_a_key"
+		onClicked: main.change_screen("screen_a_key")
 	    }
 
 	    Button {
 		id: screenB
 		text: "Screen B"
-		highlighted: false
+		highlighted: main.active_screen_key == "screen_b_key"
+		onClicked: main.change_screen("screen_b_key")
 	    }
 
 	    Item {

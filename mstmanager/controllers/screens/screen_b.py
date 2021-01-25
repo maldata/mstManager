@@ -1,7 +1,7 @@
 from .base_screen import BaseScreenController
 
 
-def ScreenBController(BaseScreenController):
+class ScreenBController(BaseScreenController):
     def __init__(self):
         super().__init__()
 

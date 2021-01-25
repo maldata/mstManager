@@ -1,15 +1,15 @@
 from enum import Enum
 
 
-class Screens(Enum):
-    SCREEN_A = auto()
-    SCREEN_B = auto()
+#class Screens(Enum):
+#    SCREEN_A = auto()
+#    SCREEN_B = auto()
 
 
 class ScreenInfo:
     def __init__(self, screen_id, qml_path, controller):
         self._id = screen_id
-        self._qml_path
+        self._qml_path = qml_path
         self._controller = controller
 
     @property
