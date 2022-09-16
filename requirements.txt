@@ -1,6 +1,6 @@
 alembic==0.8.10
 appdirs==1.4.0
-Mako==1.0.6
+Mako==1.2.2
 MarkupSafe==0.23
 packaging==16.8
 pyparsing==2.1.10
